@@ -12,14 +12,13 @@ public class Patrol_Script : MonoBehaviour
     public LayerMask groundMask;
     public Transform player;
 
-    private Rigidbody2D rb2d;
+    
     // Update is called once per frame
     void Update()
     {
         transform.Translate(Vector2.right * speed * Time.deltaTime);
         RaycastHit2D groundInfo = Physics2D.Raycast(edgeDetection.position, Vector2.down, distance);
-        if (transform.position.x > player.position.x)
-        {
+       
             if (groundInfo.collider == false)
             {
                 if (isRightDirection)
@@ -32,34 +31,10 @@ public class Patrol_Script : MonoBehaviour
                     transform.eulerAngles = new Vector3(0, 0, 0);
                     isRightDirection = true;
                 }
-            }
-        }else if(transform.position.x < player.position.x)
-        {
-            ChasePlayer();
+           
         }
     }
-    void ChasePlayer()
-    {
-        if (transform.position.x < player.position.x)
-        {
-            rb2d.velocity = new Vector2(speed, 0);
-            transform.localScale = new Vector2(0.5f, 1);
-
-        }
-        else if (transform.position.x > player.position.x)
-        {
-            rb2d.velocity = new Vector2(-speed, 0);
-            transform.localScale = new Vector2(-0.5f, 1);
-        }
-        if (transform.position.x > player.position.x)
-        {
-            StopChasingPlayer();
-        }
-    }
-    void StopChasingPlayer()
-    {
-        rb2d.velocity = new Vector2(0, 0);
-    }
+    
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
